@@ -1,0 +1,26 @@
+
+Description: This is a very simple and basic version of the game ping pong.
+	     It is a two player game toy, making it a one on one game.
+	     The game was designed to make a sound whenever the ball touches a
+	     paddle or if it touches the boundry walls. Also, if either one of
+	     the paddles touches the boundry walls it will make a different
+	     sound of multpile buzzers. The game consist of one circular ball
+	     and two rectangular paddles.
+
+
+Instructions: Player 1
+	      	     - Button 1: moves left paddle up
+		     - Button 2: moves left paddle down
+
+
+	      Player 2:
+	      	     - Button 3: moves right paddle up
+		     - Button 4: moves right paddle down
+
+
+
+To compile:  type in "make"
+
+To load:     type in "make load"
+
+To clean/delete binaries and excess files:  type "make clean"
