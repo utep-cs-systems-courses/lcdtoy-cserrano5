@@ -30,7 +30,7 @@ Layer fieldLayer =
     (AbShape *)&fieldOutline,
     {screenWidth/2, screenHeight/2},
     {0,0}, {0,0},
-    COLOR_BLUE,
+    COLOR_BLACK,
   };
 
 /*
@@ -44,7 +44,7 @@ Layer layer3 = //Ball
     (AbShape *) &circle4,
     {(screenWidth/2), (screenHeight/2)},
     {0,0}, {0,0},
-    COLOR_WHITE, &fieldLayer
+    COLOR_BLACK, &fieldLayer
   };
 
 Layer layer1 = //Paddle for player 1
@@ -52,7 +52,7 @@ Layer layer1 = //Paddle for player 1
     (AbShape *) &rect, //Rectangle shape
     {screenWidth/2-55, screenHeight/2},
     {0,0}, {0,0},
-    COLOR_WHITE,
+    COLOR_BLACK,
     &layer3 //ball layer
   };
 
@@ -61,7 +61,7 @@ Layer layer2 = //Same as player 1, just move it to the other side
     (AbShape *) &rect,
     {screenWidth/2+55, screenHeight/2+5},
     {0,0}, {0,0},
-    COLOR_WHITE,
+    COLOR_BLACK,
     &layer1 //p1 layer
   };
 
@@ -207,7 +207,7 @@ void moveBall(MovLayer *ml, Region *fence1, MovLayer *ml2, MovLayer *ml3)
 	       
 //Move handler to handle interrupts and use it for endgame
 
-u_int bgColor = COLOR_BLACK;
+u_int bgColor = COLOR_RED;
 int redrawScreen = 1;
 Region fieldFence;
 
@@ -226,6 +226,20 @@ void wdt_c_handler()
 	{
 	case 0:
 	  moveBall(&ml3, &fieldFence, &ml1, &ml2);
+	  break;
+
+	case 1: //Case for when the game reaches 3, announces winner winner
+
+	  layerDraw(&layer2);
+
+
+
+	  if(player1Score > player2Score)
+	    drawString5x7(20, 50, " P1 WINS ", COLOR_WHITE, COLOR_RED);
+
+	  else if(player1Score < player2Score)
+	    drawString5x7(20, 50, " P2 WINS ", COLOR_WHITE, COLOR_RED);
+
 	  break;
 	}
 
@@ -287,5 +301,17 @@ void main()
       movLayerDraw(&ml3, &layer2);
       movLayerDraw(&ml2, &layer2);
       movLayerDraw(&ml1, &layer2);
+
+      //P1 Score
+      drawChar5x7(5, 150, player1Score, COLOR_WHITE, COLOR_RED);
+
+      //P2 Score
+      drawChar5x7(115, 150, player2Score, COLOR_WHITE, COLOR_RED);
+
+      //Mother of all Pongs
+      drawString5x7(5, 5, "*  ---WELCOME---  *", COLOR_WHITE, COLOR_RED);
+
+      //Glance at Victory
+      drawString5x7(25, 150, "<---SCORE--->", COLOR_WHITE, COLOR_RED);
     }
 }
